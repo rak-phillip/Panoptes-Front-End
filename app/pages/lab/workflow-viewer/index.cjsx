@@ -3,12 +3,9 @@ apiClient = require 'panoptes-client/lib/api-client'
 PromiseRenderer = require '../../../components/promise-renderer'
 ChangeListener = require '../../../components/change-listener'
 WorkflowNodes = require './workflow'
-{Navigation} = require 'react-router'
 
 WorkflowVis = React.createClass
   displayName: 'WorkflowVis'
-
-  mixins: [Navigation]
 
   contextTypes:
     router: React.PropTypes.object.isRequired
