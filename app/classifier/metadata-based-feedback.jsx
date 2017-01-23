@@ -1,32 +1,35 @@
 import React from 'react';
 
-
-class MetadataBasedFeedback extends React.Component {
+export default class MetadataBasedFeedback extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isWithinTolerance: false,
+      isWithinTolerance: false
     };
 
-    this.withinAnyTolerance.bind(this);
+    this.withinAnyTolerance = this.withinAnyTolerance.bind(this);
   }
 
   componentDidMount() {
-    if (!!this.props.classification.annotations[0].value[0].x && !!this.props.classification.annotations[0].value[0].y) {
-      this.withinAnyTolerance(this.props.classification.annotations[0].value[0].x, this.props.classification.annotations[0].value[0].y);
+    if (this.props.classification.annotations.length > 0) {
+      if (this.props.classification.annotations[0].value.length > 0 && this.props.classification.annotations[0].value[0].x && this.props.classification.annotations[0].value[0].y) {
+        this.withinAnyTolerance(this.props.classification.annotations[0].value[0].x, this.props.classification.annotations[0].value[0].y);
+      }
     }
   }
 
   withinTolerance(userX, userY, metaX, metaY, tolerance) {
-    const distance = Math.sqrt((userY - metaY) ** 2 + (userX - metaX) ** 2);
+    // Airbnb rules expect us to have ES7 ** operator enabled
+    const distance = Math.sqrt(Math.pow(userY - metaY, 2) + Math.pow(userX - metaX, 2)); // eslint-disable-line no-restricted-properties
     const isWithinTolerance = distance < tolerance;
     return isWithinTolerance;
   }
 
   withinAnyTolerance(userX, userY) {
-    for (const key of Object.keys(this.props.subject.metadata)) {
-      if (key.indexOf(this.props.metaSimCoordXPattern) === 0) {
+    const metadataKeys = Object.keys(this.props.subject.metadata);
+    metadataKeys.forEach((key) => {
+      if (key.indexOf(this.props.metaSimCoordXPattern) > -1) {
         const xKey = key;
         const metaX = parseFloat(this.props.subject.metadata[xKey]);
         const yKey = this.props.metaSimCoordYPattern + xKey.substr(2);
@@ -39,19 +42,17 @@ class MetadataBasedFeedback extends React.Component {
           }
         }
       }
-    }
-
-    return false;
+    });
   }
 
   render() {
     const subjectSuccessMessage = this.props.subject.metadata[this.props.metaSuccessMessageFieldName] ? this.props.subject.metadata[this.props.metaSuccessMessageFieldName] : null;
     const subjectFailureMessage = this.props.subject.metadata[this.props.metaFailureMessageFieldName] ? this.props.subject.metadata[this.props.metaFailureMessageFieldName] : null;
-    const subjectClass = this.props.subject.metadata[this.props.metaTypeFieldName].toUpperCase() ? this.props.subject.metadata[this.props.metaTypeFieldName].toUpperCase() : null;
+    const subjectClass = this.props.subject.metadata[this.props.metaTypeFieldName] ? this.props.subject.metadata[this.props.metaTypeFieldName].toUpperCase() : null;
     const userMadeAnnotation = this.props.classification.annotations.length > 0 && this.props.classification.annotations[0].value.length > 0;
 
     if (subjectClass === this.props.dudLabel) {
-      if (userMadeAnnotation === true && subjectFailureMessage) {
+      if (userMadeAnnotation && subjectFailureMessage) {
         return (<p>{subjectFailureMessage}</p>);
       } else if (subjectSuccessMessage) {
         return (<p>{subjectSuccessMessage}</p>);
@@ -66,13 +67,17 @@ class MetadataBasedFeedback extends React.Component {
       return (<p>You classified some real data!</p>);
     }
 
-    return (<p></p>);
+    return (<p />);
   }
 }
 
 MetadataBasedFeedback.propTypes = {
-  subject: React.PropTypes.object.isRequired,
-  classification: React.PropTypes.classification.isRequired,
+  subject: React.PropTypes.shape({
+    metadata: React.PropTypes.object
+  }).isRequired,
+  classification: React.PropTypes.shape({
+    annotations: React.PropTypes.array
+  }).isRequired,
   dudLabel: React.PropTypes.string.isRequired,
   simLabel: React.PropTypes.string.isRequired,
   subjectLabel: React.PropTypes.string.isRequired,
@@ -81,7 +86,7 @@ MetadataBasedFeedback.propTypes = {
   metaFailureMessageFieldName: React.PropTypes.string.isRequired,
   metaSimCoordXPattern: React.PropTypes.string.isRequired,
   metaSimCoordYPattern: React.PropTypes.string.isRequired,
-  metaSimTolPattern: React.PropTypes.string.isRequired,
+  metaSimTolPattern: React.PropTypes.string.isRequired
 };
 
 MetadataBasedFeedback.defaultProps = {
@@ -95,8 +100,5 @@ MetadataBasedFeedback.defaultProps = {
   metaFailureMessageFieldName: '#F_Fail',
   metaSimCoordXPattern: '#X',
   metaSimCoordYPattern: '#Y',
-  metaSimTolPattern: '#Tol',
+  metaSimTolPattern: '#Tol'
 };
-
-export default MetadataBasedFeedback;
-

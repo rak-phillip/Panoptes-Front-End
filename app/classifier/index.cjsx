@@ -21,8 +21,8 @@ Shortcut = require './tasks/shortcut'
 `import TutorialButton from './tutorial-button';`
 `import MiniCourseButton from './mini-course-button';`
 `import CacheClassification from '../components/cache-classification';`
+`import MetadataBasedFeedback from './metadata-based-feedback';`
 {VisibilitySplit} = require('seven-ten')
-MetadataBasedFeedback = require('./metadata-based-feedback').default;
 
 # For easy debugging
 window.cachedClassification = CacheClassification
