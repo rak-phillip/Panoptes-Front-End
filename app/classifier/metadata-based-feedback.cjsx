@@ -9,6 +9,7 @@ module.exports = React.createClass
     return isWithinTolerance
 
   withinAnyTolerance: (userX, userY) ->
+    result = false
     for key, value of @props.subject?.metadata
       if key.indexOf(@props.metaSimCoordXPattern) == 0
         xKey = key
@@ -17,10 +18,17 @@ module.exports = React.createClass
         metaY = parseFloat(@props.subject.metadata[yKey])
         tolKey = @props.metaSimTolPattern + xKey.substr(2)
         metaTol = parseFloat(@props.subject.metadata[tolKey])
-        if metaX? && metaY? && metaTol?
-          if @withinTolerance(userX, userY, metaX, metaY, metaTol)
-            return true
-      return false
+        if metaX? and metaY? and metaTol? and @withinTolerance userX, userY, metaX, metaY, metaTol
+          result = true
+    result
+
+  getNumberOfSims: ->
+    {metadata} = @props.subject
+    count = 0
+    for key, value of @props.subject?.metadata
+      if key.indexOf(@props.metaSimCoordXPattern) is 0 and metadata[key] isnt ""
+        count = count + 1
+    count
 
   getDefaultProps: ->
     subject: null
@@ -49,9 +57,12 @@ module.exports = React.createClass
     else
       subjectFailureMessage = @props.subject?.metadata[@props.metaFailureMessageFieldName]
 
-    userXPos = @props.classification?.annotations[0]?.value[0]?.x
-    userYPos = @props.classification?.annotations[0]?.value[0]?.y
-    isWithinTolerance = @withinAnyTolerance(userXPos, userYPos)
+    numberOfSims = @getNumberOfSims()
+
+    numberOfSimsFound = for annotation in @props.classification?.annotations[0]?.value
+      @withinAnyTolerance annotation.x, annotation.y
+
+    allSimsFound = numberOfSimsFound.length is numberOfSims
 
     if subjectClass == @props.dudLabel
       if userMadeAnnotation == true && subjectFailureMessage
@@ -59,7 +70,7 @@ module.exports = React.createClass
       else if subjectSuccessMessage
         <p>{subjectSuccessMessage}</p>
     else if subjectClass == @props.simLabel
-      if (!(userMadeAnnotation?) || !isWithinTolerance) && subjectFailureMessage
+      if (!(userMadeAnnotation?) || !allSimsFound) && subjectFailureMessage
         <p>{subjectFailureMessage}</p>
       else if subjectSuccessMessage
         <p>{subjectSuccessMessage}</p>
