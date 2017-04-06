@@ -6,6 +6,17 @@ module.exports = React.createClass
   withinTolerance: (userX, userY, metaX, metaY, tolerance) ->
     distance = Math.sqrt((userY - metaY)**2 + (userX - metaX)**2)
     isWithinTolerance = distance < tolerance
+
+    console.info 'tolerance calc',
+      distance: distance
+      values:
+        userX: userX
+        userY: userY
+        metaX: metaX
+        metaY: metaY
+        tolerance: tolerance
+      isWithinTolerance: isWithinTolerance
+
     return isWithinTolerance
 
   withinAnyTolerance: (userX, userY) ->
@@ -61,6 +72,7 @@ module.exports = React.createClass
 
     numberOfSimsFound = for annotation in @props.classification?.annotations[0]?.value
       @withinAnyTolerance annotation.x, annotation.y
+    numberOfSimsFound = numberOfSimsFound.filter Boolean
 
     allSimsFound = numberOfSimsFound.length is numberOfSims
 
