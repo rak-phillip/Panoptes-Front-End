@@ -46,6 +46,16 @@ describe('SingleChoiceTask', function () {
     assert.equal(wrapper.find('input[type="radio"]').find({ checked: false, value: 0 }).length, 1);
   });
 
+  it.only('should toggle answer off if checked again and task is not required', function () {
+    const notRequiredTask = Object.assign({}, task, { required: false });
+    wrapper = mount(<SingleTask task={notRequiredTask} annotation={annotation} />);
+    wrapper.find('input[type="radio"]').find({ checked: true }).simulate('click');
+    console.log(wrapper.debug());
+
+    // console.info(wrapper.find('input[type="radio"]').find({ checked: true }))
+    // assert.equal(wrapper.find('input[type="radio"]').find({ checked: false }).length, 2);
+  });
+
   describe('static methods', function () {
     it('should be complete', function () {
       assert.equal(SingleTask.isAnnotationComplete(task, annotation), true);

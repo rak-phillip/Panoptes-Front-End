@@ -97,9 +97,15 @@ export default class SingleChoiceTask extends React.Component {
   }
 
   handleChange(index, e) {
+    console.info(e.type)
     if (e.target.checked) {
-      const newAnnotation = Object.assign({}, this.props.annotation, { value: index });
-      this.props.onChange(newAnnotation);
+      let newAnnotation;
+      if (this.props.annotation.value === index && !this.props.task.required) {
+        newAnnotation = { value: null };
+      } else {
+        newAnnotation = { value: index };
+      }
+      this.props.onChange(Object.assign({}, this.props.annotation, newAnnotation));
     }
   }
 
