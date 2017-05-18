@@ -97,6 +97,13 @@ module.exports =
       <IndexRoute component={FilteredProjectsList} />
     </Route>
 
+    <Route path="organizations">
+      <IndexRoute component={(require './pages/organizations/organizations-container').default} />
+      <Route path=":organization_id" component={(require './pages/organizations/organization-container').default}>
+        <IndexRoute component={(require './pages/organizations/organization-view').default} />
+      </Route>
+    </Route>
+
     <Route path="projects/:owner/:name" component={require './pages/project'}>
       <IndexRoute component={ProjectHomePage} />
       <Route path="home" component={ONE_UP_REDIRECT} />

@@ -1,13 +1,11 @@
 import React from 'react';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
-import PageSelector from '../projects/projects-page-selector';
-import ProjectCardList from '../projects/project-card-list';
 
 counterpart.registerTranslations('en', {
   projectsHome: {
-    title: 'Organizations',
-  },
+    title: 'Organizations'
+  }
 });
 
 const OrganizationsPage = (props) => {
@@ -19,16 +17,10 @@ const OrganizationsPage = (props) => {
         </div>
       </section>
       <section className="resources-container">
-        <ProjectCardList projects={props.organizations} />
-        {props.pages > 1 &&
-          <PageSelector
-            currentPage={+page}
-            totalPages={props.pages}
-            onChange={props.onPageChange}
-          />}
+        THIS IS THE ORGANIZATIONS LIST PAGE, CONGRATULATIONS YOU DID IT
       </section>
     </div>
   );
 };
 
-export default OrganizationsPage; 
+export default OrganizationsPage;

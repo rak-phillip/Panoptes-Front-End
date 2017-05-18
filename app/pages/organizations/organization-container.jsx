@@ -1,9 +1,13 @@
+// TODO: remove this
+/* eslint-disable no-console */
 import React from 'react';
-import ProjectCardList from '../projects/project-card-list';
+import apiClient from 'panoptes-client/lib/api-client';
 
 class OrganizationContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    console.log(props);
 
     this.state = {
       projects: []
@@ -11,21 +15,23 @@ class OrganizationContainer extends React.Component {
   }
 
   componentDidMount(page = 1) {
-    const query = {
-      page: page
-    };
+    const query = { page };
 
     apiClient.type('projects').get(query)
       .then((projects) => {
-        this.setState({ projects })
-      }).catch((e => console.error(e));
+        this.setState({ projects });
+      }).catch((e => console.error(e)));
   }
 
   render() {
     return (
-      <OrganizationPage projects={this.state.projects} /> 
+      <div>{this.props.children}</div>
     );
   }
 }
+
+OrganizationContainer.propTypes = {
+  children: React.PropTypes.arrayOf(React.PropTypes.object)
+};
 
 export default OrganizationContainer;
