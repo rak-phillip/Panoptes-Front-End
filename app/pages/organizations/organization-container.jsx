@@ -10,10 +10,11 @@ class OrganizationContainer extends React.Component {
     console.log(props);
 
     this.state = {
-      organization: {}
+      organization: { projects: [] }
     };
 
     this.renderChildren = this.renderChildren.bind(this);
+    this.fetchProjects = this.fetchProjects.bind(this);
     this.fetchOrganization = this.fetchOrganization.bind(this);
 
     this.fetchOrganization(props.params.organization_id);
@@ -34,9 +35,19 @@ class OrganizationContainer extends React.Component {
 
   fetchOrganization(id) {
     // this.setState({ organization: { id }});
-    apiClient.type('organizations').get(id).then(organization =>
-      this.setState({ organization })
-    );
+    apiClient.type('organizations').get(id).then((organization) => {
+      organization.projects = [];
+      this.setState({ organization });
+      this.fetchProjects(organization);
+    });
+  }
+
+  fetchProjects(organization) {
+    organization.get('projects').then((projects) => {
+      const org = this.state.organization;
+      org.projects = projects;
+      this.setState({ organization: org })
+    });
   }
 
   renderChildren() {
