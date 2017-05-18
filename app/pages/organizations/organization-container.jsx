@@ -10,8 +10,13 @@ class OrganizationContainer extends React.Component {
     console.log(props);
 
     this.state = {
-      projects: []
+      organization: {}
     };
+
+    this.renderChildren = this.renderChildren.bind(this);
+    this.fetchOrganization = this.fetchOrganization.bind(this);
+
+    this.fetchOrganization(props.params.organization_id);
   }
 
   componentDidMount(page = 1) {
@@ -23,9 +28,27 @@ class OrganizationContainer extends React.Component {
       }).catch((e => console.error(e)));
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.fetchOrganization(nextProps.params.organization_id);
+  }
+
+  fetchOrganization(id) {
+    // this.setState({ organization: { id }});
+    apiClient.type('organizations').get(id).then(organization =>
+      this.setState({ organization })
+    );
+  }
+
+  renderChildren() {
+    return React.Children.map(this.props.children, child =>
+      React.cloneElement(child, { organization: this.state.organization })
+    );
+  }
+
   render() {
     return (
-      <div>{this.props.children}</div>
+      // <div>{this.props.children}</div>
+      <div>{this.renderChildren()}</div>
     );
   }
 }
