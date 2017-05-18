@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCardList from '../projects/project-card-list';
 
 const OrganizationView = ({ organization }) =>
     <div className="secondary-page all-resources-page">
@@ -9,13 +10,9 @@ const OrganizationView = ({ organization }) =>
         </div>
       </section>
       <section className="resources-container">
-        <ul>
-          {organization.projects.map((project) => {
-            return (
-              <li>{project.display_name}</li>
-            )
-          })}
-        </ul>
+        <div style={{paddingTop: '1em'}}>
+          <ProjectCardList projects={organization.projects} />
+        </div>
       </section>
     </div>
 
