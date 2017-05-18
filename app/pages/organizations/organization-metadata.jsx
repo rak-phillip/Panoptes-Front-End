@@ -1,10 +1,11 @@
 import React from 'react';
 
-const OrganizationMetadataStat = ({value, label}) =>
+const OrganizationMetadataStat = ({ value, label }) => (
   <div className="project-metadata-stat">
     <div className="project-metadata-stat__value">{value}</div>
     <div className="project-metadata-stat__label">{label}</div>
   </div>
+);
 
 OrganizationMetadataStat.propTypes = {
   label: React.PropTypes.string.isRequired,
@@ -18,9 +19,9 @@ export default class OrganizationMetaData extends React.Component {
     this.extractStat = this.extractStat.bind(this);
   }
 
-  extractStat(statName){
+  extractStat(statName) {
     const projects = this.props.organization.projects;
-    return projects.reduce((accum,project)=>accum+project[statName],0);
+    return projects.reduce((accum, project) => accum + project[statName], 0);
   }
 
   render() {
@@ -30,16 +31,21 @@ export default class OrganizationMetaData extends React.Component {
       <div className="project-home-page__container">
         <div className="project-metadata">
           <span>{organization.display_name}{' '}Statistics</span>
-
           <div className="project-metadata-stats">
             <OrganizationMetadataStat label="Volunteers" value={this.extractStat('classifiers_count').toLocaleString()} />
             <OrganizationMetadataStat label="Classifications" value={this.extractStat('classifications_count').toLocaleString()} />
             <OrganizationMetadataStat label="Subjects" value={this.extractStat('subjects_count').toLocaleString()} />
             <OrganizationMetadataStat label="Completed Subjects" value={this.extractStat('retired_subjects_count').toLocaleString()} />
           </div>
-
         </div>
       </div>
     );
   }
+
 }
+
+OrganizationMetaData.propTypes = {
+  organization: React.PropTypes.shape({
+    projects: React.PropTypes.arrayOf(React.PropTypes.object)
+  }).isRequired
+};

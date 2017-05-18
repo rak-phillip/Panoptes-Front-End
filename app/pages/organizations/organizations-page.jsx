@@ -23,4 +23,8 @@ const OrganizationsPage = (props) => {
   );
 };
 
+OrganizationsPage.propTypes = {
+
+};
+
 export default OrganizationsPage;

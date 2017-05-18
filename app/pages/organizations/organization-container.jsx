@@ -1,13 +1,9 @@
-// TODO: remove this
-/* eslint-disable no-console */
 import React from 'react';
 import apiClient from 'panoptes-client/lib/api-client';
 
 class OrganizationContainer extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log(props);
 
     this.state = {
       organization: { projects: [] }
@@ -25,7 +21,7 @@ class OrganizationContainer extends React.Component {
     apiClient.type('projects').get(query)
       .then((projects) => {
         this.setState({ projects });
-      }).catch((e => console.error(e)));
+      }).catch((e => console.error(e))); // eslint-disable-line no-console
 
     document.documentElement.classList.add('on-secondary-page');
   }
@@ -35,7 +31,6 @@ class OrganizationContainer extends React.Component {
   }
 
   fetchOrganization(id) {
-    // this.setState({ organization: { id }});
     apiClient.type('organizations').get(id).then((organization) => {
       organization.projects = [];
       this.setState({ organization });
@@ -47,7 +42,7 @@ class OrganizationContainer extends React.Component {
     organization.get('projects').then((projects) => {
       const org = this.state.organization;
       org.projects = projects;
-      this.setState({ organization: org })
+      this.setState({ organization: org });
     });
   }
 
@@ -60,7 +55,10 @@ class OrganizationContainer extends React.Component {
 }
 
 OrganizationContainer.propTypes = {
-  children: React.PropTypes.arrayOf(React.PropTypes.object)
+  children: React.PropTypes.node.isRequired,
+  params: React.PropTypes.shape({
+    organization_id: React.PropTypes.string
+  }).isRequired
 };
 
 export default OrganizationContainer;
