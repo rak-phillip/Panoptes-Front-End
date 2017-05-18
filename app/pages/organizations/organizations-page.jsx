@@ -3,7 +3,7 @@ import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 
 counterpart.registerTranslations('en', {
-  projectsHome: {
+  organizationsList: {
     title: 'Organizations'
   }
 });

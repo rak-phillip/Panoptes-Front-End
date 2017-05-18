@@ -13,7 +13,6 @@ class OrganizationContainer extends React.Component {
       organization: { projects: [] }
     };
 
-    this.renderChildren = this.renderChildren.bind(this);
     this.fetchProjects = this.fetchProjects.bind(this);
     this.fetchOrganization = this.fetchOrganization.bind(this);
 
@@ -27,6 +26,8 @@ class OrganizationContainer extends React.Component {
       .then((projects) => {
         this.setState({ projects });
       }).catch((e => console.error(e)));
+
+    document.documentElement.classList.add('on-secondary-page');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,18 +51,12 @@ class OrganizationContainer extends React.Component {
     });
   }
 
-  renderChildren() {
+  render() {
     return React.Children.map(this.props.children, child =>
       React.cloneElement(child, { organization: this.state.organization })
-    );
+    )[0];
   }
 
-  render() {
-    return (
-      // <div>{this.props.children}</div>
-      <div>{this.renderChildren()}</div>
-    );
-  }
 }
 
 OrganizationContainer.propTypes = {
