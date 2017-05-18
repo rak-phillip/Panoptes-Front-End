@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCardList from '../projects/project-card-list';
+import OrganizationMetaData from './organization-metadata';
 
 const OrganizationView = ({ organization }) =>
     <div className="secondary-page all-resources-page">
@@ -14,6 +15,10 @@ const OrganizationView = ({ organization }) =>
           <ProjectCardList projects={organization.projects} />
         </div>
       </section>
+      <section>
+        <OrganizationMetaData organization={organization} />
+      </section>
+
     </div>
 
 export default OrganizationView;
