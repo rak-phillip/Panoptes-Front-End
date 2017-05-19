@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectCardList from '../projects/project-card-list';
 import OrganizationMetaData from './organization-metadata';
+import OrganizationAbout from './organization-about';
 
 const OrganizationView = ({ organization }) => (
   <div className="secondary-page all-resources-page">
@@ -15,14 +16,23 @@ const OrganizationView = ({ organization }) => (
         <ProjectCardList projects={organization.projects} />
       </div>
     </section>
-    <section>
+    <section className="organization-metadata-about-container">
       <OrganizationMetaData organization={organization} />
+      <OrganizationAbout className="organization-about" organization={organization} />
     </section>
   </div>
 );
 
+OrganizationView.defaultProps = {
+  organization: {}
+};
+
 OrganizationView.propTypes = {
-  organization: React.PropTypes.node.isRequired
+  organization: React.PropTypes.shape({
+    projects: React.PropTypes.arrayOf(React.PropTypes.object),
+    description: React.PropTypes.string,
+    display_name: React.PropTypes.string
+  }).isRequired
 };
 
 export default OrganizationView;
