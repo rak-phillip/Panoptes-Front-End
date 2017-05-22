@@ -7,6 +7,7 @@ class OrganizationsContainer extends React.Component {
     super(props);
 
     this.state = {
+      fetching: false,
       organizations: []
     };
 
@@ -14,14 +15,20 @@ class OrganizationsContainer extends React.Component {
   }
 
   componentDidMount() {
+    document.documentElement.classList.add('on-secondary-page');
+  }
+
+  componentWillReceiveProps() {
     this.fetchOrganizations();
   }
 
   fetchOrganizations() {
+    if (this.state.fetching || this.state.organizations.length > 0) return;
+
+    this.setState({ fetching: true });
     apiClient.type('organizations').get()
       .then((organizations) => {
-        console.log(organizations.length)
-        this.setState({ organizations });
+        this.setState({ organizations, fetching: false });
       }).catch((e => console.error(e))); // eslint-disable-line no-console
   }
 

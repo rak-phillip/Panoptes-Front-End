@@ -6,23 +6,15 @@ class OrganizationContainer extends React.Component {
     super(props);
 
     this.state = {
+      fetching: false,
       organization: { projects: [] }
     };
 
     this.fetchProjects = this.fetchProjects.bind(this);
     this.fetchOrganization = this.fetchOrganization.bind(this);
-
-    this.fetchOrganization(props.params.organization_id);
   }
 
-  componentDidMount(page = 1) {
-    const query = { page };
-
-    apiClient.type('projects').get(query)
-      .then((projects) => {
-        this.setState({ projects });
-      }).catch((e => console.error(e))); // eslint-disable-line no-console
-
+  componentDidMount() {
     document.documentElement.classList.add('on-secondary-page');
   }
 
@@ -31,8 +23,11 @@ class OrganizationContainer extends React.Component {
   }
 
   fetchOrganization(id) {
+    if (this.state.fetching) return;
+
+    this.setState({ fetching: true });
     apiClient.type('organizations').get(id).then((organization) => {
-      organization.projects = [];
+      organization.projects = []; // eslint-disable-line no-param-reassign
       this.setState({ organization });
       this.fetchProjects(organization);
     });
@@ -42,7 +37,7 @@ class OrganizationContainer extends React.Component {
     organization.get('projects').then((projects) => {
       const org = this.state.organization;
       org.projects = projects;
-      this.setState({ organization: org });
+      this.setState({ organization: org, fetching: false });
     });
   }
 
@@ -55,10 +50,7 @@ class OrganizationContainer extends React.Component {
 }
 
 OrganizationContainer.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  params: React.PropTypes.shape({
-    organization_id: React.PropTypes.string
-  }).isRequired
+  children: React.PropTypes.node.isRequired
 };
 
 export default OrganizationContainer;

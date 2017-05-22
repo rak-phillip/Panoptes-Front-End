@@ -17,7 +17,8 @@ const OrganizationsPage = ({ organizations }) => (
       </div>
     </section>
     <section className="resources-container">
-      THIS IS THE ORGANIZATIONS LIST PAGE, CONGRATULATIONS YOU DID IT
+      <h1>THIS IS THE ORGANIZATIONS LIST PAGE, CONGRATULATIONS YOU DID IT</h1>
+      <p>there are {organizations.length} organizations</p>
       <section className="resources-container">
         <div style={{ paddingTop: '1em' }}>
           <ProjectCardList organizations={organizations} />
@@ -28,7 +29,7 @@ const OrganizationsPage = ({ organizations }) => (
 );
 
 OrganizationsPage.propTypes = {
-
+  organizations: React.PropTypes.arrayOf(React.PropTypes.object)
 };
 
 export default OrganizationsPage;
