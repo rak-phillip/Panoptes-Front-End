@@ -17,11 +17,10 @@ class OrganizationsContainer extends React.Component {
     this.fetchOrganizations();
   }
 
-  fetchOrganizations(page = 1) {
-    const query = { page };
-
-    apiClient.type('organizations').get(query)
+  fetchOrganizations() {
+    apiClient.type('organizations').get()
       .then((organizations) => {
+        console.log(organizations.length)
         this.setState({ organizations });
       }).catch((e => console.error(e))); // eslint-disable-line no-console
   }
