@@ -8,7 +8,7 @@ class ExportWorkflowsDialog extends React.Component {
     this.state = {
       loading: false,
       workflows: [],
-      workflowSelected: false,
+      workflowSelected: false
     };
 
     this.toggleExport = this.toggleExport.bind(this);
@@ -46,7 +46,7 @@ class ExportWorkflowsDialog extends React.Component {
   }
 
   requestDataExport() {
-    apiClient.post(`/workflows/${this.workflowList.value}/classifications_export`, { media: { content_type: 'text/csv' } })
+    apiClient.post(`/workflows/${this.workflowList.value}/classifications_export`, { media: { content_type: 'text/csv' }})
       .then(() => { this.props.onSuccess(); })
       .catch((err) => { this.props.onFail(err); });
   }
@@ -59,11 +59,9 @@ class ExportWorkflowsDialog extends React.Component {
     if (this.state.workflows && this.state.workflows.length > 0) {
       return (
         <select size="5" ref={(c) => { this.workflowList = c; }} className="multiline-select standard-input" style={{ padding: '0.3vh 0.3vw' }} onChange={this.toggleExport}>
-          {this.state.workflows.map((result) => {
-            return (
-              <option key={result.id} value={result.id}>{result.display_name}</option>
-            );
-          })}
+          {this.state.workflows.map(result =>
+            <option key={result.id} value={result.id}>{result.display_name}</option>
+          )}
         </select>
       );
     }
@@ -90,7 +88,7 @@ class ExportWorkflowsDialog extends React.Component {
 ExportWorkflowsDialog.propTypes = {
   project: React.PropTypes.shape({ links: React.PropTypes.object }).isRequired,
   onSuccess: React.PropTypes.func.isRequired,
-  onFail: React.PropTypes.func.isRequired,
+  onFail: React.PropTypes.func.isRequired
 };
 
 export default ExportWorkflowsDialog;
