@@ -8,6 +8,15 @@ ComboTaskEditor = React.createClass
     task: null
     onChange: ->
 
+  getInitialState: ->
+    task: @props.task
+
+  componentWillReceiveProps: (nextProps) ->
+    console.log 'nextProps.task isnt @props.task', nextProps.task isnt @props.task
+    if nextProps.task isnt @props.task
+      @setState
+        task: nextProps.task
+
   removeTask: (index) ->
     @props.task.tasks.splice index, 1
     @props.onChange @props.task
@@ -34,6 +43,9 @@ ComboTaskEditor = React.createClass
   renderSubtask: (taskKey, i) ->
     tasks = require('..').default
     taskDescription = @props.workflow.tasks[taskKey]
+    console.log '@state.task', @state.task
+    console.log '@props.workflow.tasks', @props.workflow.tasks
+    console.log 'taskDescription', taskDescription
     taskDescription._key ?= Math.random()
     TaskComponent = tasks[taskDescription.type]
     <li key={taskDescription._key}>
