@@ -30,8 +30,8 @@ export default class OrganizationMetaData extends React.Component {
     return (
       <div className="organization-metadata">
         <div className="organization-metadata-title">
-          <h1>{organization.display_name}{' '}Statistics</h1>
-          <div className="">
+          <h1 className="organization-metadata--name">{organization.display_name}{' '}Statistics</h1>
+          <div>
             <OrganizationMetadataStat label="Volunteers" value={this.extractStat('classifiers_count').toLocaleString()} />
             <OrganizationMetadataStat label="Classifications" value={this.extractStat('classifications_count').toLocaleString()} />
             <OrganizationMetadataStat label="Subjects" value={this.extractStat('subjects_count').toLocaleString()} />

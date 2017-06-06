@@ -1,9 +1,8 @@
 import React from 'react';
 import ProjectCardList from '../projects/project-card-list';
 import OrganizationMetaData from './organization-metadata';
-import OrganizationAbout from './organization-about';
 
-const OrganizationView = ({ organization }) => (
+const OrganizationPage = ({ organization }) => (
   <div className="secondary-page all-resources-page">
     <section className="hero projects-hero">
       <div className="hero-container">
@@ -12,22 +11,27 @@ const OrganizationView = ({ organization }) => (
       </div>
     </section>
     <section className="resources-container">
-      <div style={{ paddingTop: '1em' }}>
+      <div className="organization-project-list">
         <ProjectCardList projects={organization.projects} />
       </div>
     </section>
     <section className="organization-metadata-about-container">
       <OrganizationMetaData organization={organization} />
-      <OrganizationAbout className="organization-about" organization={organization} />
+      <div className="organization-about">
+        <h1>ABOUT {organization.display_name}</h1>
+        <div className="organization-about--text">
+          {organization.introduction}
+        </div>
+      </div>
     </section>
   </div>
 );
 
-OrganizationView.defaultProps = {
+OrganizationPage.defaultProps = {
   organization: {}
 };
 
-OrganizationView.propTypes = {
+OrganizationPage.propTypes = {
   organization: React.PropTypes.shape({
     projects: React.PropTypes.arrayOf(React.PropTypes.object),
     description: React.PropTypes.string,
@@ -35,4 +39,4 @@ OrganizationView.propTypes = {
   }).isRequired
 };
 
-export default OrganizationView;
+export default OrganizationPage;
