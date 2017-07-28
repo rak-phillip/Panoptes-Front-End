@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectCardList from '../projects/project-card-list';
 import Thumbnail from '../../components/thumbnail';
+import { Markdown } from 'markdownz';
 
 const AVATAR_SIZE = 100;
 
@@ -75,7 +76,20 @@ class OrganizationPage extends React.Component {
             </div>
           </section>
           <section className="organization-details">
-            <p>Details like description, stats and about info will go here, omitting to keep PR compact.</p>
+            <div className="organization-talk">
+              <div className="organization-talk__title">Recent comments on talk</div>
+              <div className="organization-talk__content">Placeholder content: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
+              <button>Read More</button>
+            </div>
+            <div className="organization-intro">
+              <div className="organization-intro__title">ABOUT {this.props.organization.display_name}</div>
+              <div className="organization-intro__content">
+                <Markdown>
+                  {this.props.organization.introduction}
+                </Markdown>
+              </div>
+              <button>Read More</button>
+            </div>
           </section>
         </div>
       </div>);
