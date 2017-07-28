@@ -78,17 +78,18 @@ class OrganizationPage extends React.Component {
           <section className="organization-details">
             <div className="organization-talk">
               <div className="organization-talk__title">Recent comments on talk</div>
-              <div className="organization-talk__content">Placeholder content: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
+              <div className="organization-talk__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
               <button>Read More</button>
             </div>
             <div className="organization-intro">
-              <div className="organization-intro__title">ABOUT {this.props.organization.display_name}</div>
+              <div className="organization-intro__title">About {this.props.organization.display_name}</div>
               <div className="organization-intro__content">
                 <Markdown>
                   {this.props.organization.introduction}
                 </Markdown>
               </div>
-              <button>Read More</button>
+              {this.props.organization.introduction.length > 800 ?
+                (<button>Read More</button>) : null }
             </div>
           </section>
         </div>
