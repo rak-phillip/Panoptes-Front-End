@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectCardList from '../projects/project-card-list';
 import Thumbnail from '../../components/thumbnail';
 import { Markdown } from 'markdownz';
+import OrganizationMetadata from './organization-metadata';
 
 const AVATAR_SIZE = 100;
 
@@ -90,6 +91,11 @@ class OrganizationPage extends React.Component {
               </div>
               {this.props.organization.introduction.length > 800 ?
                 (<button>Read More</button>) : null }
+            </div>
+          </section>
+          <section >
+            <div className="organization-stats">
+              <OrganizationMetadata organization={this.props.organization} />
             </div>
           </section>
         </div>
