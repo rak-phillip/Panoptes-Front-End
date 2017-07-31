@@ -56,8 +56,20 @@
       p
         text-align: left
 
-.organization-stats
+.organization-metadata
   @extends .project-metadata
 
   &__title
     text-transform: uppercase
+
+.organization-metadata-stats
+  @extends .project-metadata-stats
+
+.organization-metadata-stat
+  @extends .project-metadata-stat
+
+  &__value
+    @extends .project-metadata-stat__value
+
+  &__label
+    @extends .project-metadata-stat__label

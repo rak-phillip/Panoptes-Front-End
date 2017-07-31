@@ -93,10 +93,8 @@ class OrganizationPage extends React.Component {
                 (<button>Read More</button>) : null }
             </div>
           </section>
-          <section >
-            <div className="organization-stats">
-              <OrganizationMetadata organization={this.props.organization} />
-            </div>
+          <section>
+            <OrganizationMetadata organization={this.props.organization} />
           </section>
         </div>
       </div>);

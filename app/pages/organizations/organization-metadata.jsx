@@ -1,9 +1,9 @@
 import React from 'react';
 
 const OrganizationMetadataStat = ({ value, label }) => (
-  <div>
-    <h2 className="organization-stats__value">{value > 0 ? { value } : 0}</h2>
-    <div>{label}</div>
+  <div className="organization-metadata-stat">
+    <div className="organization-metadata-stat__value">{value > 0 ? { value } : 0}</div>
+    <div className="organization-metadata-stat__label">{label}</div>
   </div>
 );
 
@@ -28,9 +28,9 @@ export default class OrganizationMetadata extends React.Component {
     const organization = this.props.organization;
 
     return (
-      <div>
-        <h6 className="organization-stats__title">{organization.display_name}{' '}Statistics</h6>
-        <div>
+      <div className="organization-metadata">
+        <div className="organization-metadata__title">{organization.display_name}{' '}Statistics</div>
+        <div className="organization-metadata-stats">
           <OrganizationMetadataStat
             label="Volunteers"
             value={this.extractStat('classifiers_count').toLocaleString()}
