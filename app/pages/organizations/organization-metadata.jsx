@@ -24,6 +24,27 @@ export default class OrganizationMetadata extends React.Component {
     return projects.reduce((accum, project) => accum + project[statName], 0);
   }
 
+  renderStatus(project) {
+    const percentComplete = Math.random();
+
+    return (
+      <div className="project-metadata-status-bar">
+        <svg width="100%" height="1em" viewBox="0 0 1 1" preserveAspectRatio="none" style={{ display: 'block' }}>
+          <defs>
+            <linearGradient id="linear-gradient">
+              <stop offset="14%" stopColor="#E45950" />
+              <stop offset="79%" stopColor="#F0B200" />
+            </linearGradient>
+          </defs>
+          <rect fill="url(#linear-gradient)" stroke="none" x="0" y="0" width={percentComplete} height="1" />
+          <rect fill="hsl(0, 0%, 75%)" stroke="none" x={percentComplete} y="0" width={1 - percentComplete} height="1" />
+        </svg>
+        <br />
+        {project.display_name} is {Math.floor(percentComplete * 100)}% Complete
+      </div>
+    );
+  }
+
   render() {
     const organization = this.props.organization;
 
@@ -44,6 +65,9 @@ export default class OrganizationMetadata extends React.Component {
             value={this.extractStat('subjects_count').toLocaleString()}
           />
         </div>
+        {organization.projects.map((project) => {
+          return (<div>{this.renderStatus(project)}</div>);
+        })}
       </div>
     );
   }

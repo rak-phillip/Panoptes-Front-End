@@ -83,18 +83,35 @@ class OrganizationPage extends React.Component {
               <button>Read More</button>
             </div>
             <div className="organization-intro">
-              <div className="organization-intro__title">About {this.props.organization.display_name}</div>
+              <div className="organization-intro__title">{this.props.organization.display_name} Introduction</div>
               <div className="organization-intro__content">
                 <Markdown>
                   {this.props.organization.introduction}
                 </Markdown>
               </div>
-              {this.props.organization.introduction.length > 800 ?
-                (<button>Read More</button>) : null }
             </div>
           </section>
           <section>
             <OrganizationMetadata organization={this.props.organization} />
+          </section>
+          <section className="organization-details">
+            <div className="organization-blog">
+              <div className="organization-blog__title">About {this.props.organization.display_name}</div>
+              <div className="organization-blog__content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <br/>
+                <br/>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              </div>
+              <button>Read More</button>
+            </div>
+            <div className="organization-social-media">
+              <div className="organization-social-media__title">Social Media</div>
+              <div className="organization-social-media__content">Follow {this.props.organization.display_name} on social media!</div>
+              <a className="organization-social-media__icon-links" href="https://facebook.com"><i className="fa fa-facebook-square fa-fw fa-2x"></i>facebook.com/hot-dog-brigade</a><br />
+              <a className="organization-social-media__icon-links" href="https://twitter.com"><i className="fa fa-twitter-square fa-fw fa-2x"></i>twitter.com/hot-dog-brigade</a><br />
+              <a className="organization-social-media__icon-links" href="https://tumblr.com"><i className="fa fa-tumblr fa-fw fa-2x"></i>tumblr.com/hot-dog-brigade</a>
+            </div>
           </section>
         </div>
       </div>);

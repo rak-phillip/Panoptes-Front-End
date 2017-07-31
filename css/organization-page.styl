@@ -73,3 +73,24 @@
 
   &__label
     @extends .project-metadata-stat__label
+
+.organization-blog
+  @extends .organization-intro
+
+  &__title
+    text-transform: uppercase
+
+  &__content
+    padding: 1em 0
+
+.organization-social-media
+  @extends .organization-talk
+
+  &__icon-links
+    @extends $reset-button
+    text-decoration: none
+
+.alternate-button // not working yet
+  background: transparent
+  border: 2px solid #ffffff
+  color: #ffffff
