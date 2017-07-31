@@ -6,6 +6,7 @@ ModalFormDialog = require 'modal-form/dialog'
 counterpart = require 'counterpart'
 projectActions = require './actions/project'
 LandingPage = require './landing-page'
+`import isAdmin from '../../lib/is-admin';`
 `import LabStatus from '../../partials/lab-status.jsx';`
 
 counterpart.registerTranslations 'en',
@@ -257,6 +258,9 @@ module.exports = React.createClass
             <Link to="/help/lab-policies" className="standard-button">Policies</Link>{' '}
             <Link to="lab-best-practices/introduction" className="standard-button">Best Practices</Link>{' '}
             <Link to="/talk/18" className="standard-button">Project Builder Talk</Link>{' '}
+            {if isAdmin()
+              labURL = if process.env.NODE_ENV is 'production' then 'https://lab.zooniverse.org/organizations' else 'https://master.lab-preview.zooniverse.org/organizations'
+              <span><a href={labURL} target="_blank" className="major-button">Create a new organization</a>{' '}</span>}
           </p>
         </div>
         {if @state.creationInProgress
