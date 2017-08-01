@@ -72,6 +72,7 @@ class OrganizationContainer extends React.Component {
         }
 
         this.fetchProjects(organization);
+        this.fetchAboutPage(organization);
       });
   }
 
@@ -84,6 +85,19 @@ class OrganizationContainer extends React.Component {
       .then((projects) => {
         const org = this.state.organization;
         org.projects = projects;
+        this.setState({ organization: org, fetching: false });
+      });
+  }
+
+  fetchAboutPage(organization) {
+    organization.get('pages', { url_key: 'about' })
+      .catch((error) => {
+        console.error('error loading about page', error); // eslint-disable-line no-console
+        this.setState({ fetching: false });
+      })
+      .then((aboutPage) => {
+        const org = this.state.organization;
+        org.aboutPage = aboutPage[0].content;
         this.setState({ organization: org, fetching: false });
       });
   }

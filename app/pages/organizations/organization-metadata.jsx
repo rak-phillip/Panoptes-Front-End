@@ -24,8 +24,10 @@ export default class OrganizationMetadata extends React.Component {
     return projects.reduce((accum, project) => accum + project[statName], 0);
   }
 
-  renderStatus(project) {
-    const percentComplete = Math.random();
+  renderStatus(project) { // eslint-disable-line class-methods-use-this
+    // TODO: remove Math.random() and only use project.completeness
+    let percentComplete;
+    project.completeness ? percentComplete = project.completeness : percentComplete = Math.random(); /* eslint no-unused-expressions: ["error", { "allowTernary": true }] */
 
     return (
       <div className="project-metadata-status-bar">
@@ -65,9 +67,9 @@ export default class OrganizationMetadata extends React.Component {
             value={this.extractStat('subjects_count').toLocaleString()}
           />
         </div>
-        {organization.projects.map((project) => {
-          return (<div>{this.renderStatus(project)}</div>);
-        })}
+        {organization.projects.map(project =>
+          <div key={project.id}>{this.renderStatus(project)}</div>
+        )}
       </div>
     );
   }
