@@ -52,7 +52,7 @@ class OrganizationPage extends React.Component {
           className="project-background"
           style={backgroundStyle}
         />
-        <div className="project-home-page">
+        <div className="organization-home-page">
           <section
             className="organization-hero"
             ref={(node) => { this.organizationHero = node; }}
