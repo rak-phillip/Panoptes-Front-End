@@ -22,7 +22,9 @@ const ProjectHomePage = (props) => {
           <FinishedBanner project={props.project} />
         </div>)}
 
-      <div className="project-home-page__description">{translations.strings.project.description || props.project.description}</div>
+      <div className="project-home-page__description">
+        {translations.strings.project.description || props.project.description}
+      </div>
 
       <ProjectHomeWorkflowButtons
         activeWorkflows={props.activeWorkflows}
@@ -71,7 +73,7 @@ const ProjectHomePage = (props) => {
 
             <div>
               <img role="presentation" src={avatarSrc} />
-              <span>&quot;{props.project.researcher_quote}&quot;</span>
+              <span>&quot;{translations.strings.project.researcher_quote || props.project.researcher_quote}&quot;</span>
             </div>
           </div>)}
 
