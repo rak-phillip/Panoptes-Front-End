@@ -26,6 +26,7 @@ React = require 'react'
 `import SubjectSetsContainer from './pages/lab/subject-sets-container';`
 `import SubjectSetsList from './pages/lab/subject-sets';`
 `import UnsubscribeFromEmails from './pages/unsubscribe';`
+`import Recents from './pages/profile/recents';`
 
 # <Redirect from="home" to="/" /> doesn't work.
 ONE_UP_REDIRECT = React.createClass
@@ -154,6 +155,7 @@ module.exports =
         <Route path="collections" component={require('./pages/collections/collections-list')} />
         <Route path="message" component={require './pages/profile/private-message'} />
       </Route>
+      <Route path="recents" component={Recents} />
     </Route>
 
     <Route path="notifications" component={NotificationsPage} />
